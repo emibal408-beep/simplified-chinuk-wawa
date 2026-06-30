@@ -1,1 +1,1 @@
-
+simplified chinuk wawa
