@@ -1,0 +1,6 @@
+{
+  "name": "Chinuk Wawa",
+  "description": "Learn simplified Chinuk Wawa language through numbers, dictionary, and interactive games.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
