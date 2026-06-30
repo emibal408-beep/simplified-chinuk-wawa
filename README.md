@@ -1,1 +1,7 @@
+# 📱 Simplified Chinuk Wawa App
 
+Download the absolute latest version of the app directly onto your Android device:
+
+[![Download APK](https://img.shields.io/badge/Download-APK%20Installer-brightgreen?style=for-the-badge&logo=android)](https://github.com/emibal408-beep/simplified-chinuk-wawa/releases/download/latest/app-debug.apk)
+
+---
