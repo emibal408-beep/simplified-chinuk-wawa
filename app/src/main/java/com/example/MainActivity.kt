@@ -43,7 +43,9 @@ fun ChinukWawaApp(viewModel: AppViewModel) {
             HomeScreen(
                 viewModel = viewModel,
                 onNavigateToLearn = { navController.navigate(Screen.LearnCategories.route) },
-                onNavigateToGame = { navController.navigate(Screen.GameDifficulty.route) }
+                onNavigateToGame = { navController.navigate(Screen.GameDifficulty.route) },
+                onNavigateToFlashcards = { navController.navigate(Screen.FlashcardsMenu.route) },
+                onNavigateToWordMatch = { navController.navigate(Screen.WordMatch.route) }
             )
         }
         composable(Screen.LearnCategories.route) {
@@ -82,6 +84,29 @@ fun ChinukWawaApp(viewModel: AppViewModel) {
             val difficulty = backStackEntry.arguments?.getString("difficulty") ?: "EASY"
             GameScreen(
                 difficulty = difficulty,
+                viewModel = viewModel,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        composable(Screen.FlashcardsMenu.route) {
+            com.example.ui.FlashcardsMenuScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToFlashcards = { category -> navController.navigate(Screen.Flashcards.createRoute(category)) }
+            )
+        }
+        composable(
+            route = Screen.Flashcards.route,
+            arguments = listOf(navArgument("category") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val category = backStackEntry.arguments?.getString("category") ?: "WORDS"
+            com.example.ui.FlashcardsScreen(
+                category = category,
+                viewModel = viewModel,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        composable(Screen.WordMatch.route) {
+            com.example.ui.WordMatchScreen(
                 viewModel = viewModel,
                 onNavigateBack = { navController.popBackStack() }
             )
