@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Gives GitHub permission to create a Release
+      contents: write
 
     steps:
     - name: Checkout Repository
@@ -28,9 +28,9 @@ jobs:
       run: |
         if [ -f gradlew ]; then
           chmod +x gradlew
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug -Dorg.gradle.jvmargs="-Xmx2048m -Dkotlin.daemon.jvm.options=-Xmx2048m"
         else
-          gradle assembleDebug
+          gradle assembleDebug -Dorg.gradle.jvmargs="-Xmx2048m -Dkotlin.daemon.jvm.options=-Xmx2048m"
         fi
 
     - name: Create Update Release
