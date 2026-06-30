@@ -82,6 +82,7 @@ fun ChinukWawaApp(viewModel: AppViewModel) {
             val difficulty = backStackEntry.arguments?.getString("difficulty") ?: "EASY"
             GameScreen(
                 difficulty = difficulty,
+                viewModel = viewModel,
                 onNavigateBack = { navController.popBackStack() }
             )
         }
