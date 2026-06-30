@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.AppViewModel
 import com.example.data.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -36,8 +37,10 @@ import kotlin.random.Random
 @Composable
 fun GameScreen(
     difficulty: String,
+    viewModel: AppViewModel,
     onNavigateBack: () -> Unit
 ) {
+    val showTranslations by viewModel.showTranslations.collectAsState()
     val coroutineScope = rememberCoroutineScope()
     
     var score by remember { mutableStateOf(0) }
@@ -49,7 +52,7 @@ fun GameScreen(
     
     // Easy & Medium State
     var currentChainQuestion by remember { mutableStateOf<EmojiChainQuestion?>(null) }
-    var chainChoices by remember { mutableStateOf<List<String>>(emptyList()) }
+    var chainChoices by remember { mutableStateOf<List<Pair<String, String>>>(emptyList()) }
     
     // Hard Mode State
     var currentAssembleQuestion by remember { mutableStateOf<AssembleQuestion?>(null) }
@@ -87,13 +90,15 @@ fun GameScreen(
                 // 3-4 emoji chain to simplified Chinuk sentence (3 choices)
                 val question = GameData.easyQuestions.random()
                 currentChainQuestion = question
-                chainChoices = (question.wrongSentences + question.correctSentence).shuffled()
+                val correctChoice = Pair(question.correctSentence, question.correctEnglish)
+                chainChoices = (question.wrongSentences + correctChoice).shuffled()
             }
             "MEDIUM" -> {
                 // 5-7 emoji chain representing full compound events (4 choices)
                 val question = GameData.mediumQuestions.random()
                 currentChainQuestion = question
-                chainChoices = (question.wrongSentences + question.correctSentence).shuffled()
+                val correctChoice = Pair(question.correctSentence, question.correctEnglish)
+                chainChoices = (question.wrongSentences + correctChoice).shuffled()
             }
             "HARD" -> {
                 // English sentence to manually assemble by tapping word blocks
@@ -357,11 +362,11 @@ fun GameScreen(
                                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                                 shape = RoundedCornerShape(16.dp)
                             ) {
-                                Box(
+                                Column(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(20.dp),
-                                    contentAlignment = Alignment.Center
+                                    horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
                                     Text(
                                         text = entry.chinuk,
@@ -369,13 +374,23 @@ fun GameScreen(
                                         fontWeight = FontWeight.Bold,
                                         color = textColor
                                     )
+                                    if (showTranslations) {
+                                        Text(
+                                            text = entry.english,
+                                            fontSize = 14.sp,
+                                            color = textColor.copy(alpha = 0.7f),
+                                            modifier = Modifier.padding(top = 4.dp)
+                                        )
+                                    }
                                 }
                             }
                         }
                     }
 
                     "EASY", "MEDIUM" -> {
-                        chainChoices.forEach { choice ->
+                        chainChoices.forEach { choicePair ->
+                            val choice = choicePair.first
+                            val english = choicePair.second
                             val isSelected = selectedStringAnswer == choice
                             val buttonColor = when {
                                 isSelected && isCorrect == true -> Color(0xFFDCE5D1)
@@ -411,11 +426,11 @@ fun GameScreen(
                                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                                 shape = RoundedCornerShape(16.dp)
                             ) {
-                                Box(
+                                Column(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(18.dp),
-                                    contentAlignment = Alignment.CenterStart
+                                    horizontalAlignment = Alignment.Start
                                 ) {
                                     Text(
                                         text = choice,
@@ -423,6 +438,14 @@ fun GameScreen(
                                         fontWeight = FontWeight.Bold,
                                         color = textColor
                                     )
+                                    if (showTranslations) {
+                                        Text(
+                                            text = english,
+                                            fontSize = 14.sp,
+                                            color = textColor.copy(alpha = 0.7f),
+                                            modifier = Modifier.padding(top = 4.dp)
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -495,12 +518,26 @@ fun GameScreen(
                                             availablePaletteBlocks = availablePaletteBlocks - block
                                         }
                                 ) {
-                                    Text(
-                                        text = block,
+                                    Column(
                                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
-                                        fontWeight = FontWeight.Bold,
-                                        color = MaterialTheme.colorScheme.onSurface
-                                    )
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ) {
+                                        Text(
+                                            text = block,
+                                            fontWeight = FontWeight.Bold,
+                                            color = MaterialTheme.colorScheme.onSurface
+                                        )
+                                        if (showTranslations) {
+                                            val translation = DictionaryData.entries.find { it.chinuk.equals(block, ignoreCase = true) }?.english?.substringBefore(",")?.substringBefore("/")?.trim()
+                                            if (translation != null) {
+                                                Text(
+                                                    text = translation,
+                                                    fontSize = 12.sp,
+                                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                                )
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
