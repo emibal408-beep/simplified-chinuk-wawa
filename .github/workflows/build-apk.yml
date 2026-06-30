@@ -38,7 +38,7 @@ jobs:
               "client_info": {
                 "mobilesdk_app_id": "1:123456789012:android:mockapp123456",
                 "android_client_info": {
-                  "package_name": "com.example.app"
+                  "package_name": "com.aistudio.chinukwawa.xyzabc"
                 }
               },
               "api_key": [
@@ -58,9 +58,7 @@ jobs:
 
     - name: Generate Debug Keystores
       run: |
-        # Generate in the root where the log in f75ab6a3-5c51-4122-9a76-e93a037c52e6 expects it
         keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
-        # Mirror copy into app folder just in case
         cp debug.keystore app/debug.keystore
 
     - name: Build with Gradle
