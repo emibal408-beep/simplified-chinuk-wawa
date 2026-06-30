@@ -24,7 +24,46 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
 
-    - name: Build Unsigned APK
+    - name: Generate Dummy Google Services Config
+      run: |
+        mkdir -p app
+        echo '{
+          "project_info": {
+            "project_number": "123456789012",
+            "project_id": "mock-project-id",
+            "storage_bucket": "mock-project-id.appspot.com"
+          },
+          "client": [
+            {
+              "client_info": {
+                "mobilesdk_app_id": "1:123456789012:android:mockapp123456",
+                "android_client_info": {
+                  "package_name": "com.example.app"
+                }
+              },
+              "api_key": [
+                {
+                  "current_key": "mock_AIzaSyMockKey_Here"
+                }
+              ],
+              "services": {
+                "appinvite_service": {
+                  "status": 1
+                }
+              }
+            }
+          ],
+          "configuration_version": "1"
+        }' > app/google-services.json
+
+    - name: Generate Debug Keystores
+      run: |
+        # Generate in the root where the log in f75ab6a3-5c51-4122-9a76-e93a037c52e6 expects it
+        keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+        # Mirror copy into app folder just in case
+        cp debug.keystore app/debug.keystore
+
+    - name: Build with Gradle
       run: |
         if [ -f gradlew ]; then
           chmod +x gradlew
