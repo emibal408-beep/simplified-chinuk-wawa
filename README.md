@@ -3,6 +3,6 @@
 
 Download the absolute latest version of the app directly onto your Android device:
 
-[![Download APK](https://img.shields.io/badge/Download-APK%20Installer-brightgreen?style=for-the-badge&logo=android)](https://github.com/emibal408-beep/simplified-chinuk-wawa/releases/download/latest/Chinuk-wawa-V2.1.apk)
+[![Download APK](https://img.shields.io/badge/Download-APK%20Installer-brightgreen?style=for-the-badge&logo=android)](https://github.com/emibal408-beep/simplified-chinuk-wawa/releases/download/latest/Chinuk-wawa-V2.2.0.apk)
 
 ---
