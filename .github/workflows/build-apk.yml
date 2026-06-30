@@ -21,10 +21,17 @@ jobs:
         distribution: 'zulu'
         java-version: '17'
 
-    - name: Universal Android Build
-      uses: skylight1/android-build-action@v1
-      with:
-        project-path: '.'
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
+
+    - name: Build Unsigned APK
+      run: |
+        if [ -f gradlew ]; then
+          chmod +x gradlew
+          ./gradlew assembleDebug -x test -Pandroid.injected.signing.config.signingReady=false
+        else
+          gradle assembleDebug -x test -Pandroid.injected.signing.config.signingReady=false
+        fi
 
     - name: Create Update Release
       uses: softprops/action-gh-release@v2
@@ -33,6 +40,8 @@ jobs:
         name: "Latest App Build"
         draft: false
         prerelease: false
-        files: '**/build/outputs/apk/**/*.apk'
+        files: |
+          **/build/outputs/apk/debug/*.apk
+          **/build/outputs/apk/**/*.apk
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
