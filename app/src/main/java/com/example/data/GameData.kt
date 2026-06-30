@@ -3,7 +3,8 @@ package com.example.data
 data class EmojiChainQuestion(
     val emojiChain: String,
     val correctSentence: String,
-    val wrongSentences: List<String>
+    val correctEnglish: String,
+    val wrongSentences: List<Pair<String, String>>
 )
 
 data class AssembleQuestion(
@@ -23,52 +24,92 @@ object GameData {
         EmojiChainQuestion(
             emojiChain = "🫲 ➡️ 🏃‍♂️ ➡️ 🏠",
             correctSentence = "Nayka klatwa kopa house",
-            wrongSentences = listOf("Mayka chako kopa house", "Klaska mamook kopa illahie")
+            correctEnglish = "I go to the house",
+            wrongSentences = listOf(
+                "Mayka chako kopa house" to "You come to the house",
+                "Klaska mamook kopa illahie" to "They work on the land"
+            )
         ),
         EmojiChainQuestion(
             emojiChain = "🫵 ➡️ 🗣️ ➡️ 🧠",
             correctSentence = "Mayka wawa pe kumtux",
-            wrongSentences = listOf("Nayka wawa pe peshak", "Yaka nanitch pe chako")
+            correctEnglish = "You speak and understand",
+            wrongSentences = listOf(
+                "Nayka wawa pe peshak" to "I speak and am bad",
+                "Yaka nanitch pe chako" to "He sees and comes"
+            )
         ),
         EmojiChainQuestion(
             emojiChain = "👥 ➡️ ❤️ ➡️ 🍽️",
             correctSentence = "Nsayka tikegh mukamak",
-            wrongSentences = listOf("Msayka olo pe klatwa", "Klaska peshak pe olo")
+            correctEnglish = "We want to eat",
+            wrongSentences = listOf(
+                "Msayka olo pe klatwa" to "You all are hungry and go",
+                "Klaska peshak pe olo" to "They are bad and hungry"
+            )
         ),
         EmojiChainQuestion(
             emojiChain = "👤 ➡️ 👁️ ➡️ 🐦",
             correctSentence = "Yaka nanitch kalakala",
-            wrongSentences = listOf("Nayka iskoom kalakala", "Mayka wawa kopa kalakala")
+            correctEnglish = "He sees a bird",
+            wrongSentences = listOf(
+                "Nayka iskoom kalakala" to "I take a bird",
+                "Mayka wawa kopa kalakala" to "You talk to a bird"
+            )
         ),
         EmojiChainQuestion(
             emojiChain = "👤 ➡️ 🛠️ ➡️ 🛶",
             correctSentence = "Yaka mamook canim",
-            wrongSentences = listOf("Klaska marsh canim", "Nayka tikegh canim")
+            correctEnglish = "He builds a canoe",
+            wrongSentences = listOf(
+                "Klaska marsh canim" to "They throw away a canoe",
+                "Nayka tikegh canim" to "I want a canoe"
+            )
         ),
         EmojiChainQuestion(
             emojiChain = "🫲 ➡️ 🏃‍♂️ ➡️ 🌍",
             correctSentence = "Nayka klatwa kopa illahie",
-            wrongSentences = listOf("Yaka chako kopa illahie", "Nsayka nanitch kopa illahie")
+            correctEnglish = "I go to the land",
+            wrongSentences = listOf(
+                "Yaka chako kopa illahie" to "He comes to the land",
+                "Nsayka nanitch kopa illahie" to "We look at the land"
+            )
         ),
         EmojiChainQuestion(
             emojiChain = "🫵 ➡️ 👁️ ➡️ 🐕",
             correctSentence = "Mayka nanitch kamooks",
-            wrongSentences = listOf("Klaska wawa kopa kamooks", "Yaka iskoom kamooks")
+            correctEnglish = "You see a dog",
+            wrongSentences = listOf(
+                "Klaska wawa kopa kamooks" to "They talk to a dog",
+                "Yaka iskoom kamooks" to "He takes a dog"
+            )
         ),
         EmojiChainQuestion(
             emojiChain = "👥 ➡️ 🗣️ ➡️ 👍",
             correctSentence = "Klaska wawa kloshe",
-            wrongSentences = listOf("Nsayka mamook peshak", "Mayka kumtux hiyu")
+            correctEnglish = "They speak well",
+            wrongSentences = listOf(
+                "Nsayka mamook peshak" to "We do bad",
+                "Mayka kumtux hiyu" to "You know a lot"
+            )
         ),
         EmojiChainQuestion(
             emojiChain = "💧 ➡️ 🚶‍♂️ ➡️ 🏠",
             correctSentence = "Chuck chako kopa house",
-            wrongSentences = listOf("Piah chako kopa stick", "Cold chako kopa illahie")
+            correctEnglish = "Water comes to the house",
+            wrongSentences = listOf(
+                "Piah chako kopa stick" to "Fire comes to the forest",
+                "Cold chako kopa illahie" to "Cold comes to the land"
+            )
         ),
         EmojiChainQuestion(
             emojiChain = "🫲 ➡️ 🤲 ➡️ 🪙",
             correctSentence = "Nayka iskoom chickamin",
-            wrongSentences = listOf("Yaka marsh chickamin", "Mayka tikegh chickamin")
+            correctEnglish = "I take the money",
+            wrongSentences = listOf(
+                "Yaka marsh chickamin" to "He throws away the money",
+                "Mayka tikegh chickamin" to "You want the money"
+            )
         )
     )
 
@@ -76,73 +117,81 @@ object GameData {
         EmojiChainQuestion(
             emojiChain = "🫲 ➡️ 🏃‍♂️ ➡️ 🏠 ➡️ ➕ ➡️ 🍽️",
             correctSentence = "Nayka klatwa kopa house pe mukamak",
+            correctEnglish = "I go to the house and eat",
             wrongSentences = listOf(
-                "Mayka chako kopa house pe mamook",
-                "Klaska klatwa kopa illahie pe nanitch",
-                "Yaka mitlite kopa house pe cly"
+                "Mayka chako kopa house pe mamook" to "You come to the house and work",
+                "Klaska klatwa kopa illahie pe nanitch" to "They go to the land and look",
+                "Yaka mitlite kopa house pe cly" to "He stays at the house and cries"
             )
         ),
         EmojiChainQuestion(
             emojiChain = "⏳ ➡️ 🫵 ➡️ 🚶‍♂️ ➡️ 📍 ➡️ 🏫",
             correctSentence = "Alki mayka chako kopa iskooh",
+            correctEnglish = "Soon you will come to school",
             wrongSentences = listOf(
-                "Ahnkuttie nayka klatwa kopa house",
-                "Alki klaska mamook kopa illahie",
-                "Alta nsayka nanitch kopa salt-chuck"
+                "Ahnkuttie nayka klatwa kopa house" to "In the past I went to the house",
+                "Alki klaska mamook kopa illahie" to "Soon they will work on the land",
+                "Alta nsayka nanitch kopa salt-chuck" to "Now we look at the ocean"
             )
         ),
         EmojiChainQuestion(
             emojiChain = "🫲 ➡️ 🛠️ ➡️ 🛶 ➡️ 🔙 ➡️ ❄️",
             correctSentence = "Nayka mamook canim kimta cole",
+            correctEnglish = "I build a canoe after winter",
             wrongSentences = listOf(
-                "Yaka mamook canim elip piah",
-                "Mayka iskoom canim kopa sun",
-                "Klaska klatwa kopa house kimta moon"
+                "Yaka mamook canim elip piah" to "He builds a canoe before the fire",
+                "Mayka iskoom canim kopa sun" to "You take a canoe in the daytime",
+                "Klaska klatwa kopa house kimta moon" to "They go to the house after a month"
             )
         ),
         EmojiChainQuestion(
             emojiChain = "👥 ➡️ 👁️ ➡️ 🌊 ➡️ ➕ ➡️ 🚢",
             correctSentence = "Nsayka nanitch salt-chuck pe piah-ship",
+            correctEnglish = "We see the ocean and the steamship",
             wrongSentences = listOf(
-                "Klaska klatwa kopa salt-chuck pe pish",
-                "Mayka kumtux salt-chuck pe boat",
-                "Yaka mamook kopa salt-chuck pe canim"
+                "Klaska klatwa kopa salt-chuck pe pish" to "They go to the ocean for fish",
+                "Mayka kumtux salt-chuck pe boat" to "You know the ocean and the boat",
+                "Yaka mamook kopa salt-chuck pe canim" to "He works at the ocean and the canoe"
             )
         ),
         EmojiChainQuestion(
             emojiChain = "⏳ ➡️ 👤 ➡️ 🏃‍♂️ ➡️ 📍 ➡️ 🌍",
             correctSentence = "Alki yaka klatwa kopa illahie",
+            correctEnglish = "Soon he will go to the land",
             wrongSentences = listOf(
-                "Alta nsayka chako kopa house",
-                "Alki mayka mamook kopa stick",
-                "Ahnkuttie klaska mitlite kopa illahie"
+                "Alta nsayka chako kopa house" to "Now we come to the house",
+                "Alki mayka mamook kopa stick" to "Soon you will work in the woods",
+                "Ahnkuttie klaska mitlite kopa illahie" to "In the past they stayed on the land"
             )
         ),
         EmojiChainQuestion(
             emojiChain = "🫵 ➡️ 🧠 ➡️ 🗣️ ➡️ ➕ ➡️ 👍",
             correctSentence = "Mayka kumtux wawa pe kloshe",
+            correctEnglish = "You understand speech and are good",
             wrongSentences = listOf(
-                "Nayka halo kumtux wawa pe peshak",
-                "Yaka tikegh wawa kopa tillikum",
-                "Klaska mamook wawa pe pelton"
+                "Nayka halo kumtux wawa pe peshak" to "I do not understand speech and am bad",
+                "Yaka tikegh wawa kopa tillikum" to "He wants to speak to people",
+                "Klaska mamook wawa pe pelton" to "They make speech and are crazy"
             )
         ),
         EmojiChainQuestion(
             emojiChain = "🫲 ➡️ 🛑 ➡️ 🛠️ ➡️ ➕ ➡️ 🏃‍♂️",
             correctSentence = "Nayka kopet mamook pe klatwa",
+            correctEnglish = "I stop working and leave",
             wrongSentences = listOf(
-                "Mayka kopet wawa pe mitlite",
-                "Yaka elip mamook pe chako",
-                "Klaska alki mamook pe klatwa"
+                "Mayka kopet wawa pe mitlite" to "You stop speaking and sit",
+                "Yaka elip mamook pe chako" to "He first works and comes",
+                "Klaska alki mamook pe klatwa" to "They will soon work and go"
             )
         ),
         EmojiChainQuestion(
             emojiChain = "👥 ➡️ 🤤 ➡️ ➕ ➡️ 🧠 ➡️ ❌",
             correctSentence = "Klaska olo pe halo kumtux",
+            correctEnglish = "They are hungry and don't understand",
             wrongSentences = listOf(
-                "Nsayka kwan pe hiyu kumtux",
-                "Msayka sick pe tikegh mukamak",
-                "Nayka olo pe tikegh chickamin"
+                "Nsayka kwan pe hiyu kumtux" to "We are glad and understand a lot",
+                "Msayka sick pe tikegh mukamak" to "You all are sick and want to eat",
+                "Nayka olo pe tikegh chickamin" to "I am hungry and want money"
             )
         )
     )
