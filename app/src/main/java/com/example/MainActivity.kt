@@ -11,6 +11,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.room.Room
+import com.example.data.AppDatabase
+import com.example.data.UserProgressRepository
 import com.example.ui.GameDifficultyScreen
 import com.example.ui.GameScreen
 import com.example.ui.HomeScreen
@@ -21,7 +24,15 @@ import com.example.ui.Screen
 import com.example.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
-    private val viewModel: AppViewModel by viewModels()
+    private val db by lazy {
+        Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "chinuk_wawa_database"
+        ).build()
+    }
+    private val repository by lazy { UserProgressRepository(db.userProgressDao()) }
+    private val viewModel: AppViewModel by viewModels { AppViewModelFactory(repository) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
