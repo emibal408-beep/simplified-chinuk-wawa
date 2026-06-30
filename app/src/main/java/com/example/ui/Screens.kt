@@ -11,4 +11,9 @@ sealed class Screen(val route: String) {
     object GamePlay : Screen("game_play/{difficulty}") {
         fun createRoute(difficulty: String) = "game_play/$difficulty"
     }
+    object FlashcardsMenu : Screen("flashcards_menu")
+    object Flashcards : Screen("flashcards/{category}") {
+        fun createRoute(category: String) = "flashcards/$category"
+    }
+    object WordMatch : Screen("word_match")
 }
