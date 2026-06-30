@@ -319,6 +319,47 @@ fun GameScreen(
                 }
             }
 
+            // BUY ANSWER CONTROLS (COST 5 POINTS)
+            if (isCorrect == null) {
+                Button(
+                    onClick = {
+                        viewModel.adjustKnowledgeScore(-5)
+                        isCorrect = true
+                        when (difficulty) {
+                            "SUPEREASY" -> {
+                                selectedEntryAnswer = superEasyTarget
+                            }
+                            "EASY", "MEDIUM" -> {
+                                selectedStringAnswer = currentChainQuestion?.correctSentence
+                            }
+                            "HARD" -> {
+                                currentAssembleQuestion?.let { q ->
+                                    assembledBlocks = q.correctBlocks
+                                }
+                            }
+                            "PRO" -> {
+                                selectedStringAnswer = currentProQuestion?.correctMeaning
+                            }
+                        }
+                        coroutineScope.launch {
+                            delay(1800)
+                            generateQuestion()
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 12.dp)
+                        .height(48.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.errorContainer,
+                        contentColor = MaterialTheme.colorScheme.onErrorContainer
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text("🔑 Buy Answer (Cost: 5 XP)", fontWeight = FontWeight.Bold)
+                }
+            }
+
             // SELECTION / CONTROLS AREA
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -350,8 +391,10 @@ fun GameScreen(
                                         if (isCorrect == true) {
                                             score += 10 + (streak * 2)
                                             streak += 1
+                                            viewModel.adjustKnowledgeScore(1)
                                         } else {
                                             streak = 0
+                                            viewModel.adjustKnowledgeScore(-2)
                                         }
                                         coroutineScope.launch {
                                             delay(1800)
@@ -414,8 +457,10 @@ fun GameScreen(
                                         if (isCorrect == true) {
                                             score += 15 + (streak * 2)
                                             streak += 1
+                                            viewModel.adjustKnowledgeScore(1)
                                         } else {
                                             streak = 0
+                                            viewModel.adjustKnowledgeScore(-2)
                                         }
                                         coroutineScope.launch {
                                             delay(1800)
@@ -575,8 +620,10 @@ fun GameScreen(
                                         if (matches) {
                                             score += 20 + (streak * 2)
                                             streak += 1
+                                            viewModel.adjustKnowledgeScore(1)
                                         } else {
                                             streak = 0
+                                            viewModel.adjustKnowledgeScore(-2)
                                         }
                                         coroutineScope.launch {
                                             delay(2000)
@@ -620,8 +667,10 @@ fun GameScreen(
                                         if (isCorrect == true) {
                                             score += 25 + (streak * 3)
                                             streak += 1
+                                            viewModel.adjustKnowledgeScore(1)
                                         } else {
                                             streak = 0
+                                            viewModel.adjustKnowledgeScore(-2)
                                         }
                                         coroutineScope.launch {
                                             delay(1800)
