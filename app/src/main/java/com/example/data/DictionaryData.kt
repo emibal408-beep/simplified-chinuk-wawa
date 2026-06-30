@@ -254,7 +254,7 @@ object DictionaryData {
         DictionaryEntry("Youtskut", "📐", "Short", DictionaryCategory.OTHER),
         DictionaryEntry("Yutl", "😁", "Glad", DictionaryCategory.OTHER),
         DictionaryEntry("Halo kumtux", "🤷", "Knows nothing / Ignorant", DictionaryCategory.INSULTS),
-        DictionaryEntry("tlil telikom", "🧑🏿", "nigger", DictionaryCategory.INSULTS),
+        DictionaryEntry("tlil telikom", "\uD83E\uDDD1\uD83C\uDFFF", "nigger", DictionaryCategory.INSULTS)
     )
 
     // Automatically sorted alphabetically!
