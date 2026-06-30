@@ -173,6 +173,14 @@ fun GameScreen(
                 when (difficulty) {
                     "SUPEREASY" -> {
                         superEasyTarget?.let { target ->
+                            if (showTranslations) {
+                                Text(
+                                    text = target.english,
+                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    modifier = Modifier.padding(bottom = 8.dp)
+                                )
+                            }
                             Text(
                                 text = target.emoji,
                                 fontSize = 100.sp,
@@ -204,6 +212,15 @@ fun GameScreen(
                                         .fillMaxWidth(),
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
+                                    if (showTranslations) {
+                                        Text(
+                                            text = question.correctEnglish,
+                                            fontSize = 20.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            textAlign = TextAlign.Center,
+                                            modifier = Modifier.padding(bottom = 8.dp)
+                                        )
+                                    }
                                     Text(
                                         text = question.emojiChain,
                                         fontSize = 32.sp,
@@ -417,14 +434,6 @@ fun GameScreen(
                                         fontWeight = FontWeight.Bold,
                                         color = textColor
                                     )
-                                    if (showTranslations) {
-                                        Text(
-                                            text = entry.english,
-                                            fontSize = 14.sp,
-                                            color = textColor.copy(alpha = 0.7f),
-                                            modifier = Modifier.padding(top = 4.dp)
-                                        )
-                                    }
                                 }
                             }
                         }
@@ -483,14 +492,6 @@ fun GameScreen(
                                         fontWeight = FontWeight.Bold,
                                         color = textColor
                                     )
-                                    if (showTranslations) {
-                                        Text(
-                                            text = english,
-                                            fontSize = 14.sp,
-                                            color = textColor.copy(alpha = 0.7f),
-                                            modifier = Modifier.padding(top = 4.dp)
-                                        )
-                                    }
                                 }
                             }
                         }
@@ -572,16 +573,6 @@ fun GameScreen(
                                             fontWeight = FontWeight.Bold,
                                             color = MaterialTheme.colorScheme.onSurface
                                         )
-                                        if (showTranslations) {
-                                            val translation = DictionaryData.entries.find { it.chinuk.equals(block, ignoreCase = true) }?.english?.substringBefore(",")?.substringBefore("/")?.trim()
-                                            if (translation != null) {
-                                                Text(
-                                                    text = translation,
-                                                    fontSize = 12.sp,
-                                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                                )
-                                            }
-                                        }
                                     }
                                 }
                             }
@@ -752,4 +743,3 @@ fun FlowRow(
         }
     }
 }
-
