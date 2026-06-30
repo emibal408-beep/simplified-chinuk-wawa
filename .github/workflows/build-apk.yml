@@ -21,22 +21,10 @@ jobs:
         distribution: 'zulu'
         java-version: '17'
 
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3
-
-    - name: Generate Debug Keystore
-      run: |
-        mkdir -p app
-        keytool -genkey -v -keystore app/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
-
-    - name: Build with Gradle
-      run: |
-        if [ -f gradlew ]; then
-          chmod +x gradlew
-          ./gradlew assembleDebug -Dorg.gradle.jvmargs="-Xmx2048m -Dkotlin.daemon.jvm.options=-Xmx2048m"
-        else
-          gradle assembleDebug -Dorg.gradle.jvmargs="-Xmx2048m -Dkotlin.daemon.jvm.options=-Xmx2048m"
-        fi
+    - name: Universal Android Build
+      uses: skylight1/android-build-action@v1
+      with:
+        project-path: '.'
 
     - name: Create Update Release
       uses: softprops/action-gh-release@v2
@@ -45,6 +33,6 @@ jobs:
         name: "Latest App Build"
         draft: false
         prerelease: false
-        files: app/build/outputs/apk/debug/app-debug.apk
+        files: '**/build/outputs/apk/**/*.apk'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
